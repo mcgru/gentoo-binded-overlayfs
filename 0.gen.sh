@@ -7,20 +7,14 @@ mkdir -p $FSDIR
 recreate_filesystems(){
 ( cd $FSDIR
   local L=lower.ext4 U=upper.ext4
-  if [ ! -r $L ]; then
+  if [ ! -r $U ]; then
   set -x
-##    echo 1>&2 "INFO: going to create empty 10GB file $L"
-#    dd if=/dev/zero of=lower.ext4 bs=1M count=10240
-##    echo 1>&2 "INFO: create filesystem on $L"
-#    mkfs  -t ext4 -F lower.ext4
-##    echo 1>&2 "INFO: copy $L to $U"
-#    cp -f lower.ext4 upper.ext4
-##    echo 1>&2 "INFO: create filesystem on $U"
-#    mkfs  -t ext4 -F upper.ext4
+    dd if=/dev/zero of=$U bs=1M count=2048
+    mkfs  -t ext4 -F $U
   else
-    echo 1>&2 "INFO: $L already exists. Skip ${FUNCNAME[0]}"
+    echo 1>&2 "INFO: $U already exists. Skip ${FUNCNAME[0]}"
   fi
-  mkdir -p lower upper merged bind-root
+##  mkdir -p lower upper merged bind-root
 )
 }
 recreate_filesystems

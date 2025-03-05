@@ -6,19 +6,20 @@ set -a ;THIS=$(realpath -P $0); CWD=$(dirname "$THIS"); source "$CWD"/common.con
 mount_filesystems(){
 ( cd $FSDIR
   set -x
+mkdir -p upper merged
 #  sudo mount lower.ext4 lower
-#  sudo mount upper.ext4 upper
+  sudo mount upper.ext4 upper
   sudo chown "$USER:$USER" lower upper
 #  sudo mount -o remount,ro lower.ext4 lower
 #  local L=lower.ext4 U=upper.ext4
-#mkdir -p upper/upper upper/merged upper/work
+mkdir -p upper/upper upper/work
 
 sudo mount --bind -o ro / bind-root
 
 # Create the overlay mount.
 sudo mount \
   -t overlay \
-  -o lowerdir=lower:bind-root,upperdir=upper/upper,workdir=upper/work \
+  -o lowerdir=bind-root,upperdir=upper/upper,workdir=upper/work \
   overlayfs \
   merged
 ###  upper/merged \
