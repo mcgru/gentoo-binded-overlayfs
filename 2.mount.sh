@@ -23,6 +23,12 @@ sudo mount \
   merged
 ###  upper/merged \
 #;
+
+  D=$FSDIR/merged/var/cache/binpkgs
+  mkdir -p $D
+  grep -Pq "^\S+\s+on\s+${D}\s" <<<$(sudo mount) || \
+    sudo mount -m --bind /var/cache/binpkgs $D
+
 for i in proc dev sys; do sudo mount --bind /$i merged/$i  ; done
 )
 }
