@@ -9,8 +9,8 @@ recreate_filesystems(){
   local L=lower.ext4 U=upper.ext4
   if [ ! -r $U ]; then
   set -x
-    dd if=/dev/zero of=$U bs=1M count=2048
-    mkfs  -t ext4 -F $U
+#    dd if=/dev/zero of=$U bs=1M count=2048
+#    mkfs  -t ext4 -F $U
   else
     echo 1>&2 "INFO: $U already exists. Skip ${FUNCNAME[0]}"
   fi
