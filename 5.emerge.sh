@@ -6,9 +6,9 @@ set -a ;THIS=$(realpath -P $0); CWD=$(dirname "$THIS"); source "$CWD"/common.con
 cd $FSDIR
 set -x
 
-CMD="emerge -gb -j2"
-TGT=nano
-[ "$1" ] && TGT="$@"
+CMD="emerge -1gb -j2"
+#TGT=nano
+[ "$#" -gt 0 ] && TGT="$@"
 chroot merged /bin/bash -c "$CMD $TGT"
 
 
