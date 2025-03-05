@@ -1,0 +1,2 @@
+
+PORTAGE_BINHOST="${PORTAGE_BINHOST}  http://localhost:8888/packages/"

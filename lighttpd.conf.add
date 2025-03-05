@@ -1,0 +1,12 @@
+server.modules += (
+    "mod_alias",
+    "mod_dirlisting"
+)
+alias.url += ( "/packages/" => "/var/cache/binpkgs/" )
+dir-listing.activate = "enable"
+server.port = 8888
+
+
+###### Probably duplicates will brake config
+server.document-root = "/var/www/html"
+server.use-ipv6 = "disable"
