@@ -9,7 +9,6 @@ unmount_filesystems(){
   sudo umount -R merged
   sudo umount -R upper
   sudo umount -R lower
-  sudo umount -R bind-root
 )
 }
 unmount_filesystems

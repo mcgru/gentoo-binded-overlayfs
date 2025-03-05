@@ -14,7 +14,7 @@ recreate_filesystems(){
   else
     echo 1>&2 "INFO: $U already exists. Skip ${FUNCNAME[0]}"
   fi
-##  mkdir -p lower upper merged bind-root
+##  mkdir -p lower upper merged
 )
 }
 recreate_filesystems
