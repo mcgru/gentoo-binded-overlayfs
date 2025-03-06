@@ -3,33 +3,37 @@
 set -euo pipefail
 set -a ;THIS=$(realpath -P $0); CWD=$(dirname "$THIS"); source "$CWD"/common.conf; [ -r "${THIS%.sh}.conf" ] && source "${THIS%.sh}.conf";  set +a
 
+: ${FSTAB:=this.fstab}
 mkdir -p $FSDIR
+
+create_some_mountpoints(){
+( cd $FSDIR
+  set -x
+  mkdir -p upper/upper upper/work merged lower
+  sudo chown "$USER:$USER" lower upper
+)
+}
+[ ! -d "$FSDIR/upper/upper" ] && create_some_mountpoints
+
+create_fstab(){
+( cd $FSDIR
+  echo "
+/  $FSDIR/lower none bind,ro 0 0
+overlayfs $FSDIR/merged overlay rw,relatime,lowerdir=lower,upperdir=upper/upper,workdir=upper/work 0 0
+/var/cache/binpkgs $FSDIR/merged/var/cache/binpkgs none bind  0 0
+/proc $FSDIR/merged/proc none bind  0 0
+/dev  $FSDIR/merged/dev  none bind  0 0
+/sys  $FSDIR/merged/sys  none bind  0 0
+" > $FSTAB
+)
+}
+[ ! -r "$FSTAB" ] && create_fstab
+
 mount_filesystems(){
 ( cd $FSDIR
   set -x
-mkdir -p upper merged lower
-#  sudo mount lower.ext4 lower
-#  sudo mount upper.ext4 upper
+  sudo mount -T $FSTAB -m -a
   sudo chown "$USER:$USER" lower upper
-#  sudo mount -o remount,ro lower.ext4 lower
-#  local L=lower.ext4 U=upper.ext4
-mkdir -p upper/upper upper/work
-
-sudo mount --bind -o ro / lower
-
-# Create the overlay mount.
-sudo mount \
-  -t overlay \
-  -o lowerdir=lower,upperdir=upper/upper,workdir=upper/work \
-  overlayfs \
-  merged
-
-  D=$FSDIR/merged/var/cache/binpkgs
-  mkdir -p $D
-  grep -Pq "^\S+\s+on\s+${D}\s" <<<$(sudo mount) || \
-    sudo mount -m --bind /var/cache/binpkgs $D
-
-for i in proc dev sys; do sudo mount --bind /$i merged/$i  ; done
 )
 }
 mount_filesystems

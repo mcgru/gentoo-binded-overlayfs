@@ -9,6 +9,7 @@ recreate_filesystems(){
   local L=lower.ext4 U=upper.ext4
   if [ ! -r $U ]; then
   set -x
+    echo 1>&2 "INFO: $U is absent. Going to create it, but NYI"
 #    dd if=/dev/zero of=$U bs=1M count=2048
 #    mkfs  -t ext4 -F $U
   else

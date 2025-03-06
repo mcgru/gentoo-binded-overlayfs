@@ -8,5 +8,6 @@ server.port = 8888
 
 
 ###### Probably duplicates will brake config
+
 server.document-root = "/var/www/html"
 server.use-ipv6 = "disable"
