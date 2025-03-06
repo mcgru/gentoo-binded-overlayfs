@@ -38,7 +38,7 @@ mount_filesystems(){
 }
 mount_filesystems
 
-chmod 700 "$FSDIR"
+[ "$(stat -c %a "$FSDIR")" != 700 ] && chmod 700 "$FSDIR"
 
 echo 1>&2 "OK: finished  $0 $*"
 exit
