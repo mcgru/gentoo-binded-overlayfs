@@ -1,0 +1,5 @@
+#!/bin/bash
+
+PREFIX=/var/lib/gentoo-binded-overlay
+TGTDIR=$PREFIX
+FSDIR=$TGTDIR
