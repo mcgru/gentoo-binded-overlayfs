@@ -9,7 +9,7 @@ set -x
 
 TGT=world
 [ "$#" -gt 0 ] && TGT="$@"
-CMD="emerge -1NuDav --with-bdeps=y -gb -j2"
+CMD="emerge -1uDNv --with-bdeps=y -gb -j2"
 chroot merged /bin/bash -c "$CMD $TGT"
 
 

@@ -7,7 +7,7 @@ cd $FSDIR
 set -x
 
 CMD="emerge -1gb -j2"
-#TGT=nano
+TGT=
 [ "$#" -gt 0 ] && TGT="$@"
 chroot merged /bin/bash -c "$CMD $TGT"
 
