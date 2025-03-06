@@ -6,14 +6,14 @@ set -a ;THIS=$(realpath -P $0); CWD=$(dirname "$THIS"); source "$CWD"/common.con
 : ${FSTAB:=this.fstab}
 mkdir  -p "$FSDIR"
 
-create_some_mountpoints(){
+create_base_mountpoints(){
 ( cd $FSDIR
   set -x
   mkdir -p upper/upper upper/work merged lower
   if [ "$(stat -c %U lower)" != "$USER" ] ; then sudo chown "$USER:$USER" lower upper ; fi
 )
 }
-if [ ! -d "$FSDIR/upper/upper" ] ; then create_some_mountpoints ; fi
+if [ ! -d "$FSDIR/upper/upper" ] ; then create_base_mountpoints ; fi
 
 create_fstab(){
 ( cd $FSDIR
@@ -24,6 +24,7 @@ overlayfs $FSDIR/merged overlay rw,relatime,lowerdir=lower,upperdir=upper/upper,
 /proc $FSDIR/merged/proc none bind  0 0
 /dev  $FSDIR/merged/dev  none bind  0 0
 /sys  $FSDIR/merged/sys  none bind  0 0
+/dev/shm  $FSDIR/merged/dev/shm  none bind  0 0
 " > $FSTAB
 )
 }
