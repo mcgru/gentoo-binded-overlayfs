@@ -8,7 +8,7 @@ set -x
 
 CMD="emerge -1gb -j2"
 TGT=
-[ "$#" -gt 0 ] && TGT="$@"
+[ "$#" -gt 0 ] && TGT="$@" ||:
 chroot merged /bin/bash -c "$CMD $TGT"
 
 

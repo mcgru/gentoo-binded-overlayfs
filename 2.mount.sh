@@ -10,10 +10,10 @@ create_some_mountpoints(){
 ( cd $FSDIR
   set -x
   mkdir -p upper/upper upper/work merged lower
-  [ "$(stat -c %U lower)" != "$USER" ] && sudo chown "$USER:$USER" lower upper
+  if [ "$(stat -c %U lower)" != "$USER" ] ; then sudo chown "$USER:$USER" lower upper ; fi
 )
 }
-[ ! -d "$FSDIR/upper/upper" ] && create_some_mountpoints
+if [ ! -d "$FSDIR/upper/upper" ] ; then create_some_mountpoints ; fi
 
 create_fstab(){
 ( cd $FSDIR
@@ -27,18 +27,17 @@ overlayfs $FSDIR/merged overlay rw,relatime,lowerdir=lower,upperdir=upper/upper,
 " > $FSTAB
 )
 }
-[ ! -r "$FSTAB" ] && create_fstab
+if [ ! -r "$FSTAB" ] ; then create_fstab ; fi
 
 mount_filesystems(){
 ( cd $FSDIR
   set -x
   sudo mount -T $FSTAB -m -a
-###  sudo chown "$USER:$USER" lower upper
 )
 }
 mount_filesystems
 
-[ "$(stat -c %a "$FSDIR")" != 700 ] && chmod 700 "$FSDIR"
+if [ "$(stat -c %a "$FSDIR")" != 700 ] ; then  chmod 700 "$FSDIR" ; fi
 
 echo 1>&2 "OK: finished  $0 $*"
 exit
