@@ -33,7 +33,7 @@ mount_filesystems(){
 ( cd $FSDIR
   set -x
   sudo mount -T $FSTAB -m -a
-  sudo chown "$USER:$USER" lower upper
+###  sudo chown "$USER:$USER" lower upper
 )
 }
 mount_filesystems
