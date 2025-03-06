@@ -10,7 +10,7 @@ create_some_mountpoints(){
 ( cd $FSDIR
   set -x
   mkdir -p upper/upper upper/work merged lower
-  sudo chown "$USER:$USER" lower upper
+  [ "$(stat -c %U lower)" != "$USER" ] && sudo chown "$USER:$USER" lower upper
 )
 }
 [ ! -d "$FSDIR/upper/upper" ] && create_some_mountpoints
