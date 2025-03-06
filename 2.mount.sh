@@ -5,7 +5,6 @@ set -a ;THIS=$(realpath -P $0); CWD=$(dirname "$THIS"); source "$CWD"/common.con
 
 : ${FSTAB:=this.fstab}
 mkdir  -p "$FSDIR"
-chmod 700 "$FSDIR"
 
 create_some_mountpoints(){
 ( cd $FSDIR
@@ -38,6 +37,8 @@ mount_filesystems(){
 )
 }
 mount_filesystems
+
+chmod 700 "$FSDIR"
 
 echo 1>&2 "OK: finished  $0 $*"
 exit
