@@ -25,11 +25,10 @@ __chroot(){
 }
 
 if [ "$DOSYNC" ]; then
-__chroot emaint sync
+  __chroot emaint sync
+else
+  __chroot "emerge -1uDNv --with-bdeps=y -gb -j2" "$TGT"
 fi
-
-__chroot "emerge -1uDNv --with-bdeps=y -gb -j2" "$TGT"
-
 
 echo 1>&2 "OK: finished  $0 $*"
 exit
