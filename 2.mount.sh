@@ -30,9 +30,11 @@ overlayfs $FSDIR/merged overlay rw,relatime,lowerdir=lower,upperdir=upper/upper,
 if [ ! -r "$FSDIR/$FSTAB" ] ; then create_fstab ; fi
 
 mount_filesystems(){
-  set -x
+( set -ex
+  cd "$FSDIR"
   sudo mount -T "$FSDIR/$FSTAB" -m -a
   :
+)
 }
 mount_filesystems
 
