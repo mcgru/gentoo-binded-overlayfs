@@ -6,6 +6,12 @@ set -a ;THIS=$(realpath -P $0); CWD=$(dirname "$THIS"); source "$CWD"/common.con
 cd $FSDIR
 set -x
 
+DOSYNC=""
+if grep -qP "^[-]*sync" <<<"${1:-noVal}" ; then
+  DOSYNC=da-do-sync
+  shift 1
+fi
+
 TGT=world
 [ "$#" -gt 0 ] && TGT="$@" ||:
 
@@ -18,9 +24,8 @@ __chroot(){
   chroot merged /bin/bash -c "$CMD  $TGT"
 }
 
-if grep -qP "^[-]*sync" "$1" ; then
-__chroot "emaint sync" "$TGT"
-shift 1
+if [ "$DOSYNC" ]; then
+__chroot emaint sync
 fi
 
 __chroot "emerge -1uDNv --with-bdeps=y -gb -j2" "$TGT"
