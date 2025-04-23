@@ -14,7 +14,7 @@ HOMEPAGE="https://github.com/mcgru/gentoo-binded-overlayfs"
 
 EGIT_REPO_URI="${HOMEPAGE}.git"
 #EGIT_BRANCH="main"  # Укажите нужную ветку, если требуется
-EGIT_COMMIT="9329939"
+EGIT_COMMIT="7371410"
 
 LICENSE="MIT"
 SLOT="0"

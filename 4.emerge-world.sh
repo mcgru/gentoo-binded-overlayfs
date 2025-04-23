@@ -8,8 +8,22 @@ set -x
 
 TGT=world
 [ "$#" -gt 0 ] && TGT="$@" ||:
-CMD="emerge -1uDNv --with-bdeps=y -gb -j2"
-chroot merged /bin/bash -c "$CMD $TGT"
+
+#CMD="emerge -1uDNv --with-bdeps=y -gb -j2"
+#chroot merged /bin/bash -c "$CMD $TGT"
+
+__chroot(){
+  local CMD="${1:?need CMD as arg1 in ${FUNCNAME[0]}}"
+  local TGT="${2}"
+  chroot merged /bin/bash -c "$CMD  $TGT"
+}
+
+if grep -qP "^[-]*sync" "$1" ; then
+__chroot "emaint sync" "$TGT"
+shift 1
+fi
+
+__chroot "emerge -1uDNv --with-bdeps=y -gb -j2" "$TGT"
 
 
 echo 1>&2 "OK: finished  $0 $*"
