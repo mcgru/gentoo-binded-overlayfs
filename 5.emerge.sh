@@ -12,7 +12,7 @@ CMD="emerge -1uDNv --with-bdeps=y -gb -j2"
 [ "$#" -gt 0 ] && TGT="$@" ||:
 [ "$TGT" != world ] && CMD="emerge -1gb -j2" ||:
 
-if [ -x ./pre-emerge.hook.sh ];
+if [ -x ./pre-emerge.hook.sh ]; then
   cp -a ./pre-emerge.hook.sh -f -t merged
   chroot merged /bin/bash -c "/pre-emerge.hook.sh"
 fi
