@@ -17,8 +17,8 @@ if [ ! -d "$FSDIR/upper/upper" ] ; then create_base_mountpoints ; fi
 
 create_fstab(){
   ! grep -q "overlayfs" "$FSDIR/$FSTAB"  2>/dev/null  &&  echo "
-/  $FSDIR/lower none bind,ro 0 0
-overlayfs $FSDIR/merged overlay rw,relatime,lowerdir=lower,upperdir=upper/upper,workdir=upper/work 0 0
+/         $FSDIR/lower  none    bind,ro  0 0
+overlayfs $FSDIR/merged overlay rw,relatime,lowerdir=lower,upperdir=upper/upper,workdir=upper/work  0 0
 /var/cache/binpkgs $FSDIR/merged/var/cache/binpkgs none bind  0 0
 /proc $FSDIR/merged/proc none bind  0 0
 /dev  $FSDIR/merged/dev  none bind  0 0
