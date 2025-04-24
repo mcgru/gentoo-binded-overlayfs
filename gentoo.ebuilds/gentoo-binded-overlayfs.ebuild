@@ -31,8 +31,8 @@ KEYWORDS="amd64"
 src_install() {
 #### lighttpd.conf.add
 	exeinto /usr/share/$PN
-	doexe   1.cleanup.sh 2.mount.sh 4.emerge-world.sh 8.pure.emerge.sh 9.umount.sh z.full.emerge-world.sh
-	dosym   /usr/share/$PN/z.full.emerge-world.sh /usr/bin/proxify-emerge-world
+	doexe   1.cleanup.sh 2.mount.sh 5.emerge.sh 8.pure.emerge.sh 9.umount.sh z.full.emerge-world.sh
+	dosym   /usr/share/$PN/z.dispatch.sh /usr/bin/proxify-emerge-world
 	insinto /usr/share/$PN
 	cp -f common.conf.varlib $T/common.conf
 	doins   $T/common.conf
