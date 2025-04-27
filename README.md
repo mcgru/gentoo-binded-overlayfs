@@ -27,3 +27,6 @@ to prepare binary packages for specific package
 proxify-emerge-world PACKAGENAME
 ```
 
+--------
+
+[What AI thinks wbout it](https://deepwiki.com/mcgru/gentoo-binded-overlayfs/)
