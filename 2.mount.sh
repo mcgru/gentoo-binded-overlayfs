@@ -31,6 +31,9 @@ if [ ! -r "$FSDIR/$FSTAB" ] ; then create_fstab ; fi
 
 mount_filesystems(){
 ( set -ex
+  if grep -q "$FSDIR/upper" /etc/fstab ; then
+     mount   "$FSDIR/upper" ||:  ## case for mounted partition
+  fi
   cd "$FSDIR"
   sudo mount -T "$FSDIR/$FSTAB" -m -a
   :
