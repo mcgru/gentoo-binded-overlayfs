@@ -6,7 +6,7 @@ set -a ;THIS=$(realpath -P $0); CWD=$(dirname "$THIS"); source "$CWD"/common.con
 unmount_filesystems(){
 ( cd $FSDIR
   set -x +e
-  sudo umount -R merged
+  sudo umount -R merged{/dev/shm,/dev,/sys,/proc,/var/cache/binpkgs,}
   sudo umount -R upper
   sudo umount -R lower
 )
